@@ -6,67 +6,74 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
-    private final List <Data> movielist;
-    private final AdapterListener listener;
-    Context context;
+    private List<Data> MakananList;
+    private MainActivity adapter1;
+    private ItemClickListener itemclicklistener;
+    private Context context;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView tvRilis, tvJudul;
-        public ImageView ivGambar;
-
-        public MyViewHolder (View view) {
-            super(view);
-            tvJudul = view.findViewById(R.id.tvjudul);
-            tvRilis = view.findViewById(R.id.tvrilis);
-            ivGambar = view.findViewById(R.id.ivgambar);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onDataSelected(movielist.get(getAdapterPosition()));
-                }
-            });
-        }
-    }
-
-
-    public Adapter(Context context, List<Data> movielist, AdapterListener listener) {
+    public Adapter(Context context, List<Data> makananlist, MainActivity listener) {
         this.context = context;
-        this.movielist = movielist;
-        this.listener = listener;
+        this.MakananList = makananlist;
+        this.adapter1 = adapter1;
     }
 
     @NonNull
     @Override
-    public Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View ItemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_layout, parent, false);
-
-        return new MyViewHolder(ItemView);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter.MyViewHolder holder, int position) {
-        final Data data = this.movielist.get(position);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        final Data data = MakananList.get(position);
         holder.tvJudul.setText(data.getJudul());
-        holder.tvRilis.setText(data.getRilis());
-        Glide.with(holder.itemView.getContext()).load(data.getImage()).into(holder.ivGambar);
+        holder.tvDeskripsi.setText(data.getDeskripsi());
+
+        Glide.with(holder.itemView.getContext())
+                .load(data.getImageUrl())
+                .placeholder(R.mipmap.ic_launcher)
+                .into(holder.ivGambar);
     }
 
     @Override
     public int getItemCount() {
-        return this.movielist.size();
-    }
-    public interface AdapterListener {
-        void onDataSelected(Data data);
+        return MakananList.size();
     }
 
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView tvDeskripsi, tvJudul;
+        public ImageView ivGambar;
+
+        public MyViewHolder(View view) {
+            super(view);
+            tvJudul = view.findViewById(R.id.tvjudul);
+            tvDeskripsi = view.findViewById(R.id.tvDeskripsi);
+            ivGambar = view.findViewById(R.id.ivgambar);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (itemclicklistener != null) itemclicklistener.onItemClick(view, getAdapterPosition());
+        }
+    }
+
+    Data getItem(int id) {
+        return MakananList.get(id);
+    }
+
+    void setClickListener(ItemClickListener itemClickListener) {
+        this.itemclicklistener = itemClickListener;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
+    }
 }

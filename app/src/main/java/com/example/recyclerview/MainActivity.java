@@ -5,96 +5,97 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.ProgressBar;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements Adapter.AdapterListener {
+public class MainActivity extends AppCompatActivity implements Adapter.ItemClickListener {
     private Adapter adapter;
-    private RecyclerView rvfilm;
-    private ArrayList <Data> DataFilm;
+    private RecyclerView rvMakanan;
+    private ArrayList<Data> DataMakanan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DataFilm = new ArrayList<>();
-        adapter = new Adapter(getApplicationContext(), DataFilm,MainActivity.this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        rvfilm = findViewById(R.id.rvFilm);
-        rvfilm.setHasFixedSize(true);
-        rvfilm.setLayoutManager(mLayoutManager);
-        rvfilm.setAdapter(adapter);
-        AddData();
 
+        DataMakanan = new ArrayList<>();
+        adapter = new Adapter(getApplicationContext(), DataMakanan, MainActivity.this);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        rvMakanan = findViewById(R.id.rvFilm);
+        rvMakanan.setHasFixedSize(true);
+        rvMakanan.setLayoutManager(mLayoutManager);
+        rvMakanan.setAdapter(adapter);
+        adapter.setClickListener(this);
+
+        AddData();
     }
     public void AddData() {
 
-        // Start AddData
-        Data film1 = new Data();
-        film1.setJudul("The Super Mario Bros. Movie");
-        film1.setRilis("Apr 05, 2023");
-        film1.setImage("https://www.themoviedb.org/t/p/w220_and_h330_face/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg");
-        DataFilm.add(film1);
+        Data makanan1 = new Data();
+        makanan1.setImageUrl("https://cdn1-production-images-kly.akamaized.net/EjwV7j3Y4JrlqUFuavke4NtRWtM=/1200x675/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3108566/original/079979700_1587487794-Sajiku_1.jpg");
+        makanan1.setJudul("Nasi Goreng");
+        makanan1.setDeskripsi("Nasi goreng adalah makanan berupa nasi yang digoreng dan dicampur dalam minyak goreng, margarin, atau mentega");
+        DataMakanan.add(makanan1);
 
-        Data film2 = new Data();
-        film2.setJudul("Shazam! Fury of the Gods");
-        film2.setRilis("Mar 16, 2023");
-        film2.setImage("https://www.themoviedb.org/t/p/w220_and_h330_face/A3ZbZsmsvNGdprRi2lKgGEeVLEH.jpg");
-        DataFilm.add(film2);
 
-        Data film3 = new Data();
-        film3.setJudul("Cocaine Bear");
-        film3.setRilis("Mar 17, 2023");
-        film3.setImage("https://www.themoviedb.org/t/p/w220_and_h330_face/gOnmaxHo0412UVr1QM5Nekv1xPi.jpg");
-        DataFilm.add(film3);
+        Data makanan2 = new Data();
+        makanan2.setJudul("Ayam Geprek");
+        makanan2.setImageUrl("https://png.pngtree.com/png-clipart/20230319/original/pngtree-complete-geprek-chicken-with-fresh-vegetables-png-image_8996077.png");
+        makanan2.setDeskripsi("Ayam geprek adalah makanan ayam goreng tepung khas Indonesia yang diulek atau dilumatkan bersama sambal bajak.");
+        DataMakanan.add(makanan2);
 
-        Data film4 = new Data();
-        film4.setJudul("65");
-        film4.setRilis("Mar 08, 2023");
-        film4.setImage("https://www.themoviedb.org/t/p/w220_and_h330_face/rzRb63TldOKdKydCvWJM8B6EkPM.jpg");
-        DataFilm.add(film4);
+        Data makanan3 = new Data();
+        makanan3.setJudul("Ayam Bakar");
+        makanan3.setImageUrl("https://asset.kompas.com/crops/yoovaRyPxaPFOY4gfCciore2eUY=/3x0:700x465/750x500/data/photo/2020/12/30/5fec5602f116e.jpg");
+        makanan3.setDeskripsi("Ayam bakar adalah sebuah hidangan Asia Tenggara Maritim, terutama hidangan Indonesia atau Malaysia, dari ayam yang dipanggang di atas arang.");
+        DataMakanan.add(makanan3);
 
-        Data film5 = new Data();
-        film5.setJudul("John WIck: Chapter 4");
-        film5.setRilis("Mar 22, 2023");
-        film5.setImage("https://www.themoviedb.org/t/p/w220_and_h330_face/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg");
-        DataFilm.add(film5);
+        Data makanan4 = new Data();
+        makanan4.setJudul("Sate Ayam");
+        makanan4.setImageUrl("https://www.blibli.com/friends-backend/wp-content/uploads/2023/04/B300045-Cover-resep-sate-ayam.jpg");
+        makanan4.setDeskripsi("Sate ayam adalah makanan khas Indonesia. Sate Ayam dibuat dari daging ayam.");
+        DataMakanan.add(makanan4);
 
-        Data film6 = new Data();
-        film6.setJudul("The Pope's Exorcist");
-        film6.setRilis("Apr 19, 2023");
-        film6.setImage("https://www.themoviedb.org/t/p/w220_and_h330_face/9JBEPLTPSm0d1mbEcLxULjJq9Eh.jpg");
-        DataFilm.add(film6);
+        Data makanan5 = new Data();
+        makanan5.setJudul("Pecel lele");
+        makanan5.setImageUrl("https://asset.kompas.com/crops/QT6V0LoKz42gr5uezLBcGZyBBLw=/0x0:1000x667/750x500/data/photo/2021/03/21/60569b33a2b3d.jpeg");
+        makanan5.setDeskripsi("Pecel lele atau pecek lele atau penyetan adalah makanan khas Jawa Timur, yang terdiri dari ikan lele dan sambal tomat.");
+        DataMakanan.add(makanan5);
 
-        Data film7 = new Data();
-        film7.setJudul("Dungeons & Dragons: Honor Among Thieves");
-        film7.setRilis("Mar 29, 2023");
-        film7.setImage("https://www.themoviedb.org/t/p/w220_and_h330_face/6LuXaihVIoJ5FeSiFb7CZMtU7du.jpg");
-        DataFilm.add(film7);
+        Data makanan6 = new Data();
+        makanan6.setJudul("Nasi Kuning");
+        makanan6.setImageUrl("https://www.sasa.co.id/medias/page_medias/nasi_kuning_rice_cooker.jpg");
+        makanan6.setDeskripsi("Nasi kuning adalah makanan khas Indonesia. Makanan ini terbuat dari beras yang dimasak bersama dengan kunyit serta santan dan rempah-rempah.");
+        DataMakanan.add(makanan6);
 
-        Data film8 = new Data();
-        film8.setJudul("Champions");
-        film8.setRilis("Mar 10, 2023");
-        film8.setImage("https://www.themoviedb.org/t/p/w220_and_h330_face/yVgtsoXyTZBww7SWE4JE1U4Wcel.jpg");
-        DataFilm.add(film8);
+        Data makanan7 = new Data();
+        makanan7.setJudul("Nasi Lemak");
+        makanan7.setImageUrl("https://upload.wikimedia.org/wikipedia/commons/5/55/Nasi_Lemak_dengan_Chili_Nasi_Lemak_dan_Sotong_Pedas%2C_di_Penang_Summer_Restaurant.jpg");
+        makanan7.setDeskripsi("Nasi lemak adalah jenis makanan khas suku Melayu yang lazim ditemukan di Malaysia");
+        DataMakanan.add(makanan7);
 
-        Data film9 = new Data();
-        film9.setJudul("Scream VI");
-        film9.setRilis("Mar 08, 2023");
-        film9.setImage("https://www.themoviedb.org/t/p/w220_and_h330_face/aePBN8ffLCHoUXp8lkA5P29CXdx.jpg");
-        DataFilm.add(film9);
+        Data makanan8 = new Data();
+        makanan8.setJudul("Sup Iga");
+        makanan8.setImageUrl("https://awsimages.detik.net.id/community/media/visual/2022/07/07/resep-sop-iga-sapi-jawa-1.jpeg?w=1200");
+        makanan8.setDeskripsi("Sup buntut dibuat dengan ekor sapi. Sedikitnya ada lima versi sup buntut yang populer di seluruh dunia: makanan tradisional Korea, makanan Tiongkok yang lebih mirip semur, ekor sapi goreng/panggang");
+        DataMakanan.add(makanan8);
 
-        Data film10 = new Data();
-        film10.setJudul("The Woman King");
-        film10.setRilis("Mar 10, 2023");
-        film10.setImage("https://www.themoviedb.org/t/p/w220_and_h330_face/438QXt1E3WJWb3PqNniK0tAE5c1.jpg");
-        DataFilm.add(film10);
+        Data makanan9 = new Data();
+        makanan9.setJudul("Rawon");
+        makanan9.setImageUrl("https://www.masakapahariini.com/wp-content/uploads/2021/10/resep-rawon-daging-780x440-1.jpg");
+        makanan9.setDeskripsi("Rawon adalah masakan khas Indonesia yang berasal dari Ponorogo yang berupa sup daging berkuah hitam");
+        DataMakanan.add(makanan9);
 
-        // End AddData
+
+
     }
 
-    @Override
-    public void onDataSelected(Data data) {
 
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "You clicked " + adapter.getItem(position).getJudul() + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 }

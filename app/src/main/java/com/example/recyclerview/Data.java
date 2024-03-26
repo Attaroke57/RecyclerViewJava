@@ -1,33 +1,31 @@
 package com.example.recyclerview;
 
 public class Data {
-    private String image;
-    private String Judul;
+    private String imageUrl;
+    private String judul;
+    private String deskripsi;
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getJudul() {
-        return Judul;
+        return judul;
     }
 
     public void setJudul(String judul) {
-        Judul = judul;
+        this.judul = judul;
     }
 
-    public String getRilis() {
-        return rilis;
+    public String getDeskripsi() {
+        return deskripsi;
     }
 
-    public void setRilis(String rilis) {
-        this.rilis = rilis;
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
     }
-
-    private String rilis;
-
 }
